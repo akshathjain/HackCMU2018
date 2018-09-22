@@ -11,7 +11,7 @@ function format(data) {
   return [x, y];
 }
 
-function predict(data, time, n) {
+function predict(data, time) {
   const newData = format(data);
   const n = newData[0].length;
   const regression;
@@ -28,8 +28,6 @@ function predict(data, time, n) {
   const numIntervals = 20;
   const lastTime = Number.parseInt(newData[0][newData[0].length - 1], 10);
   const interval = (time - lastTime) / numIntervals;
-
-  console.log(regression.toString(3));
 
   const outputData = [];
   for (let i = 1; i <= numIntervals; i += 1) {

@@ -56,7 +56,7 @@ router.post('/signup', (req, res, next) => {
 /*
   GET check if a username is taken (for sign up form)
 */
-router.post('/usercheck', (req, res, next) => {
+router.get('/usercheck', (req, res, next) => {
   const { username } = req.query;
 
   // make sure we have valid param

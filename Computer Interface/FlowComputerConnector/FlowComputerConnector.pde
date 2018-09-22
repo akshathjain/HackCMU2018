@@ -7,21 +7,30 @@ Purpose:
 import processing.serial.*;
 import java.util.*;
 
+import http.requests.*;
+
 Serial port;
 int w = 1000;
 int h = 750;
+PostRequest post;
+int numDataPoints;
 
 void setup(){
   //println(Serial.list());
   size(1000, 750);
   textSize(50);
   port = new Serial(this, Serial.list()[2], 9600);
+  post = new PostRequest("localhost:3000/api/flow?id=42069");
 }
 
 void draw(){
   String output;
   if(port.available() > 0){
     output = port.readString();
+    
+    post.addData("value", output);
+    post.addData("timestamp", System.currentTimeMillis() + "");
+    post.send();
     
     //draw a white rectangle
     fill(255, 255, 255);

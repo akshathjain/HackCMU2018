@@ -34,7 +34,7 @@ router.post('/signup', (req, res, next) => {
 
   // make sure we have valid params
   if (!username || !password || !email) {
-    next(createError(400, 'Provide username, password hash, and email'));
+    return next(createError(400, 'Provide username, password hash, and email'));
   }
 
   // check if user exists already
@@ -61,13 +61,13 @@ router.post('/usercheck', (req, res, next) => {
   const { username } = req.query;
 
   // make sure we have valid param
-  if (!username) next(createError(400, 'Provide a username to check'));
+  if (!username) return next(createError(400, 'Provide a username to check'));
 
   // check if the user exists already
   req.db.exists(`user:${username}`, (err, reply) => {
     if (err) return next(createError(500, err));
-    if (reply) res.sendStatus(409);
-    else res.sendStatus(200);
+    if (reply) return res.sendStatus(409);
+    res.sendStatus(200);
   });
 });
 

@@ -7,9 +7,16 @@ function scrollToSection(id) {
   });
 }
 
+// Self-explanatory
+function validateEmail(email) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
 // Show or hide LogIn/SignUp popups
 function showModal(id, displayVal) {
   if (displayVal) {
+    document.getElementById('showPassword').checked = false;
     $(`#${id}`).css('display', 'inherit');
   }
   else {
@@ -35,30 +42,65 @@ function togglePWVisibility() {
 
 function checkUName(username) {
   if (username !== "") {
-    console.log(username);
+    $.post("/login/usercheck/",
+      {
+        "username": username
+      },
+      function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      }
+    );
   }
 }
 
 function signUp() {
   var username = $('#signUpUsername').val();
   var email = $('#signUpEmail').val();
-  var password = sha512($('#signUpPassword').val());
+  var password = $('#signUpPassword').val();
+  //$('#signUpError').addClass("is-hidden");
+
+  if (!username) {
+    $('#signUpError').html("You need a username.");
+    $('#signUpError').removeClass("is-hidden");
+    return false;
+  }
+  else if (!validateEmail(email)) {
+    $('#signUpError').html("You need to input a valid email.");
+    $('#signUpError').removeClass("is-hidden");
+    return false;
+  }
+  else if (!password) {
+    $('#signUpError').html("As lazy as you are, your password  must be more than 0 characters long.");
+    $('#signUpError').removeClass("is-hidden");
+    return false;
+  }
 
   $.post("/login/signup/",
     {
       "username": username,
       "email": email,
-      "password": password
+      "password": sha512(password)
     },
     function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
+      if (status == 'success') {
+        logIn(username, password);
+      }
+      else {
+        alert("Rip");
+      }
     }
   );
+
+  return true;
 }
 
-function logIn() {
-  var username = $('#logInUsername').val();
-  var password = sha512($('#logInPassword').val());
+function logIn(username, password) {
+  if (!username) {
+    var username = $('#logInUsername').val();
+  }
+  if (!password) {
+    var password = sha512($('#logInPassword').val());
+  }
 
   $.post("/login/",
     {

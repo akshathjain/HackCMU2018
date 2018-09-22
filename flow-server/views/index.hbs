@@ -128,10 +128,11 @@
 							</div>
 							<div class="field" onchange="togglePWVisibility()">
 								<label class="checkbox">
-									<input type="checkbox" value="0">
+									<input id="showPassword" type="checkbox" value="0">
 									Show password
 								</label>
 							</div>
+							<p id="signUpError" class="help is-danger is-hidden"></p>
 						</form>
 					</section>
 					<footer class="modal-card-foot">
@@ -180,6 +181,9 @@
 				</div>
 			</div>
 		</div>
+	</section>
+	<section>
+		<div></div>
 	</section>
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

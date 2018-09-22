@@ -42,7 +42,7 @@ function togglePWVisibility() {
 
 function checkUName(username) {
   if (username !== "") {
-    $.post("/login/usercheck/",
+    $.get("/login/usercheck/",
       {
         "username": username
       },

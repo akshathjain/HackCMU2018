@@ -37,7 +37,7 @@ router.post('/flow', (req, res, next) => {
 /*
   POST register a Flow
     id (of the Flow in question, should be unregistered)
-    username (the Flow will be registered to this user)
+  username inferred from auth
 */
 router.post('/register', checkAuth, (req, res, next) => {
   const { id } = req.body;
@@ -61,7 +61,43 @@ router.post('/register', checkAuth, (req, res, next) => {
     // enroll this Flow for the user
     req.db.hset(`user:${username}`, 'flow', id, (regErr) => {
       if (regErr) return next(createError(500, err));
-      res.status(200).send(`Registered Flow ${id} to ${username}`);
+
+      // mark flow as registered in db set
+      req.db.sadd('flows', id, (addErr) => {
+        if (addErr) return next(createError(500, err));
+        res.status(200).send(`Registered Flow ${id} to ${username}`);
+      });
+    });
+  });
+});
+
+/*
+  POST deregister a Flow
+  username inferred from auth
+  id based on user's current flow
+*/
+router.post('/deregister', checkAuth, (req, res, next) => {
+  const { username } = req.user;
+  const id = req.user.flow;
+
+  // make sure we have valid params
+  if (!id || !username) {
+    return next(createError(400, 'Provide a Flow ID and username'));
+  }
+
+  // make sure Flow is marked as registered
+  req.db.sismember('flows', id, (err, reply) => {
+    if (err) return next(createError(500, err));
+
+    // disenroll this Flow from the user
+    req.db.hdel(`user:${username}`, 'flow', (derErr) => {
+      if (derErr) return next(createError(500, err));
+
+      // remove Flow registration in db
+      req.db.srem('flows', id, (remErr) => {
+        if (remErr) return next(createError(500, err));
+        res.status(200).send(`Deregistered Flow ${id} from ${username}`);
+      });
     });
   });
 });

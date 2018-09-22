@@ -1,62 +1,39 @@
-const regression = require('regression');
-
-// Converts array of timestamps and values into {x, y}
-function toPlotPoints(arr) {
-  const data = [];
-  for (let i = 0; i < arr.length - 1; i += 2) {
-    data.push({
-      x: arr[i + 1],
-      y: arr[i],
-    });
-  }
-  return data;
-}
+const PolynomialRegression = require('ml-regression-polynomial');
 
 function format(data) {
-  const newData = [];
-  for (let i = 0; i < data.length; i += 1) {
-    newData[i] = [data[i].x, data[i].y];
-  }
-  return newData;
-}
-
-function polynomial(data, time, scale) {
-  const newData = data;
+  const x = [];
+  const y = [];
 
   for (let i = 0; i < data.length; i += 1) {
-    newData[i][0] /= scale;
+    x[i] = data[i].x;
+    y[i] = data[i].y;
   }
-
-  return regression.polynomial(data, { order: data.length - 1 }).equation;
-}
-
-function evaluate(equation, x, scale) {
-  let y = 0;
-  for (let i = 0; i < equation.length; i += 1) {
-    y += equation[i] * ((x / scale) ** (equation.length - i - 1));
-  }
-  return y;
+  return [x, y];
 }
 
 function predict(data, time) {
-  const scale = 10 ** 6;
-  const numIntervals = 20;
-  const lastTime = data[data.length - 1].x;
-  const interval = (time - lastTime) / numIntervals;
-  const equation = polynomial(format(data), time, scale);
+  const newData = format(data);
+  const n = newData[0].length;
+  const regression = new PolynomialRegression(newData[0], newData[1], n);
 
+  const numIntervals = 20;
+  const lastTime = parseInt(newData[0][n - 1]);
+  const interval = (time - lastTime) / numIntervals;
+  
   const outputData = [];
   for (let i = 1; i <= numIntervals; i += 1) {
-    const xVal = lastTime + i * interval;
+    const xVal = parseInt(lastTime + i * interval);
     outputData[i - 1] = {
       x: xVal,
-      y: evaluate(equation, xVal, scale),
+      y: regression.predict(xVal),
     };
   }
   return outputData;
 }
 
+//console.log(predict([{ x: '1537617195', y: '1' }, { x: '1537617224', y: '4' }, { x: '1537617233', y: '2.5' }], 1538236733));
+
 module.exports = {
   toPlotPoints,
-  predict,
+  predict2,
 };

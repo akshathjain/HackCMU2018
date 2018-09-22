@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const passport = require('passport');
+const checkAuth = require('../util/check-auth');
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ router.post('/', passport.authenticate('local', {
   GET dashboard page
   must be logged into access
 */
-router.get('/dashboard', passport.authMiddleware(), (req, res) => {
+router.get('/dashboard', checkAuth, (req, res) => {
   res.render('dashboard');
 });
 

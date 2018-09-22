@@ -8,11 +8,6 @@ function setupAuth() {
       getUser(req.db, username, callback, false, true, password);
     }));
 
-  passport.authMiddleware = () => (req, res, next) => {
-    if (req.isAuthenticated()) return next();
-    res.status(403).redirect('/');
-  };
-
   passport.serializeUser((user, callback) => {
     callback(null, user.username);
   });

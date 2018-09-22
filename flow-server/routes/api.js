@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const passport = require('passport');
+const checkAuth = require('../util/check-auth');
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.post('/flow', (req, res, next) => {
   GET data points for a Flow
   must be logged in to access
 */
-router.get('/myflow', passport.authMiddleware(), (req, res, next) => {
+router.get('/myflow', checkAuth, (req, res, next) => {
   const { id } = req.query;
 
   // get values with timestamps

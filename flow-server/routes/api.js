@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const checkAuth = require('../util/check-auth');
+const smartAI = require('../util/smart-ai');
 
 const router = express.Router();
 
@@ -103,6 +104,56 @@ router.post('/deregister', checkAuth, (req, res, next) => {
 });
 
 /*
+  POST set a limit on water consumption
+    value (should be an int or float)
+  username inferred from auth
+*/
+router.post('/setlimit/', checkAuth, (req, res, next) => {
+  const { username } = req.user;
+  const { value } = req.body;
+
+  // make sure we have valid params
+  if (!username || Number.isNaN(value)) {
+    return next(createError(400, 'Provide a username and value'));
+  }
+
+  // set limit if value is provided
+  if (value && value > 0) {
+    req.db.hset(`user:${username}`, 'limit', value, (err) => {
+      if (err) return next(createError(500, err));
+      res.status(200).send(`Set water limit to ${value} for ${username}`);
+    });
+  // otherwise remove limit for this user
+  } else {
+    req.db.hdel(`user:${username}`, 'limit', (err) => {
+      if (err) return next(createError(500, err));
+      res.status(200).send(`Removed water limit for ${username}`);
+    });
+  }
+});
+
+/*
+  POST set user email
+    address
+  username inferred from auth
+*/
+router.post('/setemail/', checkAuth, (req, res, next) => {
+  const { username } = req.user;
+  const { value } = req.body;
+
+  // make sure we have valid params
+  if (!username || !value) {
+    return next(createError(400, 'Provide a username and email address'));
+  }
+
+  // set new email address
+  req.db.hset(`user:${username}`, 'email', value, (err) => {
+    if (err) return next(createError(500, err));
+    res.status(200).send(`Set water limit to ${value} for ${username}`);
+  });
+});
+
+/*
   GET current user data
 */
 router.get('/my', checkAuth, (req, res) => {
@@ -115,14 +166,24 @@ router.get('/my', checkAuth, (req, res) => {
 */
 router.get('/myflow', checkAuth, (req, res, next) => {
   const id = req.user.flow;
+  let { num, futureTime } = req.query;
+
+  // fill in some args if necessary
+  if (!num || num < 0) num = 0;
+  if (!futureTime || Number.isNaN(futureTime) || futureTime <= Date.now()) {
+    futureTime = new Date().setDate(new Date().getDate() + 7);
+  }
 
   // make sure we have a valid param
   if (!id) return next(createError(400, 'Provide a Flow ID'));
 
   // get values with timestamps
-  req.db.zrange([`flow:${id}`, 0, -1, 'withscores'], (err, reply) => {
+  req.db.zrange([`flow:${id}`, -num, -1, 'withscores'], (err, reply) => {
     if (err) return next(createError(500, err));
-    res.json(reply);
+    res.json({
+      collected_data: smartAI.toPlotPoints(reply),
+      smart_ai: smartAI.predict(reply, futureTime),
+    });
   });
 });
 

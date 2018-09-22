@@ -1,7 +1,7 @@
 /* Background image for landing screen */
 #water {
 	/* The image used */
-	background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url("../images/stock.jpg");
+	background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url("/images/stock.jpg");
 
 	/* Full height */
 	height: 100%;

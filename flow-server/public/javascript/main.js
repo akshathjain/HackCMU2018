@@ -6,12 +6,6 @@ function scrollToSection(id) {
   });
 }
 
-// Self-explanatory
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(String(email).toLowerCase());
-}
-
 // Show or hide LogIn/SignUp popups
 // eslint-disable-next-line no-unused-vars
 function showModal(id, displayVal) {
@@ -75,7 +69,7 @@ function signUp() {
     document.querySelector('#signUpError').classList.remove('is-hidden');
     return;
   }
-  if (!validateEmail(email)) {
+  if (!email) {
     document.querySelector('#signUpError')
       .innerHTML = 'You need to input a valid email.';
     document.querySelector('#signUpError').classList.remove('is-hidden');

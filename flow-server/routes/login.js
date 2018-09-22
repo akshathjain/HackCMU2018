@@ -70,4 +70,12 @@ router.post('/usercheck', (req, res, next) => {
   });
 });
 
+/*
+  GET logout (poof!)
+*/
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 module.exports = router;

@@ -66,9 +66,10 @@ function logIn() {
       "password": password
     },
     function(data, status) {
-      alert("Data: " + data + "\nStatus: " + status);
       if (status == 'success') {
-        window.location.href = '/login/dashboard/';
+        window.location.href = '/login/dashboard';
+      } else {
+        alert('Login failed!');
       }
     }
   );

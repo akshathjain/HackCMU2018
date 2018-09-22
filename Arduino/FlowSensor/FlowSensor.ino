@@ -13,6 +13,6 @@ void setup() {
 
 void loop() {
   flowRate = analogRead(flowSensorPin);
-  Serial.println(flowRate);
+  Serial.print(flowRate);
   delay(1000);
 }

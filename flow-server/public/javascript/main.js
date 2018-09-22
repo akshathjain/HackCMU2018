@@ -40,7 +40,7 @@ function checkUName(username) {
 }
 
 function signUp() {
-  var username = $('#signUpUserName').val();
+  var username = $('#signUpUsername').val();
   var email = $('#signUpEmail').val();
   var password = sha512($('#signUpPassword').val());
   
@@ -52,13 +52,21 @@ function signUp() {
     }, 
     function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
-      //alert("Hello");
     }
   );
 }
 
 function logIn() {
-  var username = $('#logInUserName').val();
-  var password = $('#logInPassword').val();
-  doSomething(username, email, password);
+  var username = $('#logInUsername').val();
+  var password = sha512($('#logInPassword').val());
+
+  $.post("/login/signup", 
+    {
+      "username": username, 
+      "password": password
+    }, 
+    function(data, status){
+      alert("Data: " + data + "\nStatus: " + status);
+    }
+  );
 }

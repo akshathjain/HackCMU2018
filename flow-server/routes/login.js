@@ -59,9 +59,6 @@ router.post('/signup', (req, res, next) => {
 router.get('/usercheck', (req, res, next) => {
   const { username } = req.query;
 
-  // make sure we have valid param
-  if (!username) return next(createError(400, 'Provide a username to check'));
-
   // check if the user exists already
   req.db.exists(`user:${username}`, (err, reply) => {
     if (err) return next(createError(500, err));

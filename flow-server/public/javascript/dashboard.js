@@ -1,38 +1,32 @@
-var user;
+let user;
 
-$(document).ready(function () {
-  $.get('/api/my', function(data, status) {
-    if (status == 'success') {
-      user = data;
-      if (user.flow) {
-        $.get('/api/myflow', function(data, success) {
-          if (status == 'success') {
-            $('#flowinfo').removeClass('is-hidden');
-          } else {
-            alert('An error has occurred!')
-          }
-        });
-      } else {
-        $('#registerflow').removeClass('is-hidden');
-      }
+document.addEventListener('DOMContentLoaded', () => {
+  axios.get('/api/my').then((res) => {
+    user = res.data;
+    if (user.flow) {
+      axios.get('/api/myflow').then(() => {
+        document.querySelector('#flowinfo').classList.remove('is-hidden');
+      }).catch(() => {
+        alert('Data unavailable');
+      });
     } else {
-      alert('An error has occurred!');
-      window.location.href = '/';
+      document.querySelector('#registerflow').classList.remove('is-hidden');
     }
+  }).catch(() => {
+    alert('Idk what went wrong');
   });
 });
 
+// eslint-disable-next-line no-unused-vars
 function addFlow() {
-  var flow = $('#flowid').val();
-  if(flow) {
-    $.post('/api/register', {
-      id: flow
-    }, function(data, success) {
-      if (success == 'success') {
-        window.location.reload();
-      } else {
-        alert('An error has occurred!');
-      }
+  const flow = document.querySelector('#flowid').value;
+  if (flow) {
+    axios.post('/api/register', {
+      id: flow,
+    }).then(() => {
+      window.location.reload();
+    }).catch(() => {
+      alert('Failed to register');
     });
   }
 }

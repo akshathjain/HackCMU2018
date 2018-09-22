@@ -80,12 +80,10 @@ function signUp() {
       "username": username,
       "email": email,
       "password": sha512(password)
-    },
-    function(data, status){
+    }, (data, status) => {
       if (status == 'success') {
         logIn(username, password);
-      }
-      else {
+      } else {
         alert("Rip");
       }
     }
@@ -95,19 +93,14 @@ function signUp() {
 }
 
 function logIn(username, password) {
-  if (!username) {
-    var username = $('#logInUsername').val();
-  }
-  if (!password) {
-    var password = sha512($('#logInPassword').val());
-  }
+  if (!username) username = $('#logInUsername').val();
+  if (!password) password = $('#logInPassword').val();
 
   $.post("/login/",
     {
       "username": username,
-      "password": password
-    },
-    function(data, status) {
+      "password": sha512(password)
+    }, (data, status) => {
       if (status == 'success') {
         window.location.href = '/login/dashboard';
       } else {

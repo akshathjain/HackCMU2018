@@ -48,7 +48,7 @@ function logIn(...args) {
 
   axios.post('/login/', {
     username,
-    password: sha512(password),
+    password,
   }).then(() => {
     window.location.href = '/login/dashboard';
   }).catch(() => {
@@ -85,7 +85,7 @@ function signUp() {
   axios.post('/login/signup/', {
     username,
     email,
-    password: sha512(password),
+    password,
   }).then(() => {
     logIn(username, password);
   }).catch(() => {

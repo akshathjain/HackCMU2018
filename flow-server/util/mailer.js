@@ -24,7 +24,7 @@ function genContent(props, type) {
 }
 
 function send(recipient, props, type) {
-  if (outbox.contains(recipient)) return;
+  if (outbox.includes(recipient)) return;
   transporter.sendMail({
     from: 'flowfluidproject@gmail.com',
     to: recipient,

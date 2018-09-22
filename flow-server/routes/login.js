@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 const checkAuth = require('../util/check-auth');
 const sendEmail = require('../util/mailer');
 
@@ -45,7 +46,7 @@ router.post('/signup', (req, res, next) => {
     // create user account
     req.db.hmset(`user:${username}`, {
       username,
-      password,
+      password: bcrypt.hashSync(password, 16),
       email,
     }, (createErr) => {
       if (createErr) return next(createError(500, err));

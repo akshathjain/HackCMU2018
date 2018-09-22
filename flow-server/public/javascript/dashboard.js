@@ -93,7 +93,7 @@ function createChart() {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'value',
+            labelString: 'Liters/second',
           },
         }],
       },

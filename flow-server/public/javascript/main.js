@@ -25,20 +25,18 @@ function showModal(id, displayVal) {
 
 // Make password visible
 let passwordVisible = false;
-document.querySelector('#showPassword').checked = false;
 // eslint-disable-next-line no-unused-vars
 function togglePWVisibility() {
   if (passwordVisible) {
-    document.querySelector('#PWVisible').classList.add('fa-eye');
-    document.querySelector('#PWVisible').classList.remove('fa-eye-slash');
-    document.querySelector('#signUpPassword').type = 'password';
-    passwordVisible = false;
-  } else {
     document.querySelector('#PWVisible').classList.remove('fa-eye');
     document.querySelector('#PWVisible').classList.add('fa-eye-slash');
+    document.querySelector('#signUpPassword').type = 'password';
+  } else {
+    document.querySelector('#PWVisible').classList.add('fa-eye');
+    document.querySelector('#PWVisible').classList.remove('fa-eye-slash');
     document.getElementById('signUpPassword').type = 'text';
-    passwordVisible = true;
   }
+  passwordVisible = !passwordVisible;
 }
 
 // eslint-disable-next-line no-unused-vars

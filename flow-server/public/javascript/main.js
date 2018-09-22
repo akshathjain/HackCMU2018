@@ -95,19 +95,22 @@ function signUp() {
   return true;
 }
 
+// eslint-disable-next-line no-unused-vars
 function betterPassword() {
   document.querySelector('#logInPassword').classList.remove('is-danger');
   document.querySelector('#badPassword').classList.add('is-hidden');
 }
 
+// eslint-disable-next-line no-unused-vars
 function logInEnter(e) {
-  if (e.keyCode == 13) {
+  if (e.keyCode === 13) {
     logIn();
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function signUpEnter(e) {
-  if (e.keyCode == 13) {
+  if (e.keyCode === 13) {
     signUp();
   }
 }

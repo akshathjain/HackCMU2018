@@ -180,9 +180,10 @@ router.get('/myflow', checkAuth, (req, res, next) => {
   // get values with timestamps
   req.db.zrange([`flow:${id}`, -num, -1, 'withscores'], (err, reply) => {
     if (err) return next(createError(500, err));
+    const data = smartAI.toPlotPoints(reply);
     res.json({
-      collected_data: smartAI.toPlotPoints(reply),
-      smart_ai: smartAI.predict(reply, futureTime),
+      collected_data: data,
+      smart_ai: smartAI.predict(data, futureTime),
     });
   });
 });

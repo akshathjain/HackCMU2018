@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const passport = require('passport');
 const checkAuth = require('../util/check-auth');
+const sendEmail = require('../util/mailer');
 
 const router = express.Router();
 
@@ -49,6 +50,9 @@ router.post('/signup', (req, res, next) => {
     }, (createErr) => {
       if (createErr) return next(createError(500, err));
       res.status(200).send(`Created user ${username} with email ${email}`);
+
+      // send email welcome
+      sendEmail(email, { username }, 'signup');
     });
   });
 });

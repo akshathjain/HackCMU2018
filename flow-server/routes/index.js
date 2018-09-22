@@ -2,9 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-/* GET home page. */
+/*
+  GET home/landing page
+*/
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 module.exports = router;

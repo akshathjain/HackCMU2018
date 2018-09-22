@@ -86,7 +86,7 @@ router.post('/deregister', checkAuth, (req, res, next) => {
   }
 
   // make sure Flow is marked as registered
-  req.db.sismember('flows', id, (err, reply) => {
+  req.db.sismember('flows', id, (err) => {
     if (err) return next(createError(500, err));
 
     // disenroll this Flow from the user

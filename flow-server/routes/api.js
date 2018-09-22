@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const checkAuth = require('../util/check-auth');
 const smartAI = require('../util/smart-ai');
+const sendEmail = require('../util/mailer');
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.post('/flow', (req, res, next) => {
   }
 
   // check for Flow membership in db
-  req.db.sismember('flows', id, (err, reply) => {
+  req.db.get(`flowu:${id}`, (err, reply) => {
     // make sure the Flow exists
     if (err) return next(createError(500, err));
     if (!reply) return next(createError(404, 'Flow not found'));
@@ -31,6 +32,14 @@ router.post('/flow', (req, res, next) => {
     req.db.zadd([`flow:${id}`, timestamp, value], (addErr) => {
       if (addErr) return next(createError(500, err));
       res.status(200).send(`Recorded data for Flow ${id} at ${timestamp}`);
+
+      // check if value is over limit and send email
+      req.db.hgetall(`user:${reply}`, (userErr, userReply) => {
+        if (!userErr && userReply.limit && userReply.limit > 0
+          && value > userReply.limit) {
+          sendEmail(userReply.email, { id }, 'limit');
+        }
+      });
     });
   });
 });
@@ -55,7 +64,7 @@ router.post('/register', checkAuth, (req, res, next) => {
   }
 
   // make sure Flow is not registered already
-  req.db.sismember('flows', id, (err, reply) => {
+  req.db.exists(`flowu:${id}`, (err, reply) => {
     if (err) return next(createError(500, err));
     if (reply) return next(createError(409, 'Flow already registered'));
 
@@ -64,7 +73,7 @@ router.post('/register', checkAuth, (req, res, next) => {
       if (regErr) return next(createError(500, err));
 
       // mark flow as registered in db set
-      req.db.sadd('flows', id, (addErr) => {
+      req.db.set(`flowu:${id}`, username, (addErr) => {
         if (addErr) return next(createError(500, err));
         res.status(200).send(`Registered Flow ${id} to ${username}`);
       });
@@ -87,7 +96,7 @@ router.post('/deregister', checkAuth, (req, res, next) => {
   }
 
   // make sure Flow is marked as registered
-  req.db.sismember('flows', id, (err) => {
+  req.db.exists(`flowu:${id}`, (err) => {
     if (err) return next(createError(500, err));
 
     // disenroll this Flow from the user
@@ -95,7 +104,7 @@ router.post('/deregister', checkAuth, (req, res, next) => {
       if (derErr) return next(createError(500, err));
 
       // remove Flow registration in db
-      req.db.srem('flows', id, (remErr) => {
+      req.db.del(`flowu:${id}`, (remErr) => {
         if (remErr) return next(createError(500, err));
         res.status(200).send(`Deregistered Flow ${id} from ${username}`);
       });
@@ -182,8 +191,8 @@ router.get('/myflow', checkAuth, (req, res, next) => {
     if (err) return next(createError(500, err));
     const data = smartAI.toPlotPoints(reply);
     res.json({
-      collected_data: data,
-      smart_ai: smartAI.predict(data, futureTime),
+      collected_data: data.length > 0 ? data : [],
+      smart_ai: data.length > 0 ? smartAI.predict(data, futureTime) : [],
     });
   });
 });

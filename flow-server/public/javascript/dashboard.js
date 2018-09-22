@@ -82,7 +82,7 @@ function createChart() {
         xAxes: [{
           type: 'time',
           time: {
-            format: 'X',
+            format: 'x',
             tooltipFormat: 'DD/MM/YYYY HH:mm:ss',
           },
           scaleLabel: {

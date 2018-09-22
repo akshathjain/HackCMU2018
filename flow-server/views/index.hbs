@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Flow!</title>
+	<title>Flow! Revolutionizing water consumption</title>
 
 	<!-- Bulma -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
@@ -26,8 +26,8 @@
 					</div>
 					<div class="navbar-menu">
 						<div class="navbar-end">
-							<a class="navbar-item scroll-section" onclick="scrollToSection('why')">Why Tho</a>
-							<a class="navbar-item scroll-section" onclick="scrollToSection('about')">About Us</a>
+							<a class="navbar-item scroll-section" onclick="scrollToSection('why')">Why?</a>
+							<a class="navbar-item scroll-section" onclick="scrollToSection('about')">About</a>
 						</div>
 					</div>
 				</div>
@@ -47,9 +47,15 @@
 				<h3 id="main-subtitle" class="subtitle is-3">
 					Track water from your fingertips
 				</h3>
-				<a class="button is-outlined is-white is-rounded is-medium" onclick="showModal('signUp', true)">
-					<strong>Sign up or log in</strong>
-				</a>
+				{{#if logged_in}}
+					<a class="button is-outlined is-white is-rounded is-medium" href="/login/dashboard">
+						<strong>Go to dashboard</strong>
+					</a>
+				{{else}}
+					<a class="button is-outlined is-white is-rounded is-medium" onclick="showModal('signUp', true)">
+						<strong>Sign up or log in</strong>
+					</a>
+				{{/if}}
 			</div>
 		</div>
 		<div class="hero-foot">
@@ -117,6 +123,22 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Footer -->
+	<footer class="footer has-text-centered">
+	  <div class="container">
+      <p>
+        <strong class="has-text-weight-semibold">
+          Copyright &copy; 2018 Deepayan Patra, Akshath Jain, Soumil Mukherjee, Ashwin Srinivasan.
+        </strong>
+      </p>
+      <p>
+        <small>
+          Made with <a href="https://bulma.io">Bulma</a>, <a href="https://nodejs.org/en/">Node.js</a>, <a href="https://expressjs.com">Express</a>, and <a href="https://redis.io">Redis</a>. Source code licensed under <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+        </small>
+      </p>
+	  </div>
+	</footer>
 
 	<!-- Log In Popup Form -->
 	<div class="modal" id="logIn">

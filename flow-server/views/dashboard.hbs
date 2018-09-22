@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Dash!</title>
+  <title>Dashboard | Flow</title>
 
   <!-- Bulma -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
@@ -15,6 +15,7 @@
 </head>
 <body>
   <section class="hero is-dark is-small has-background-image" id="water">
+    <!-- Navbar -->
     <div class="hero-head">
       <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
         <div class="container">
@@ -62,13 +63,16 @@
   </section>
   <section id="flowinfo" class="section is-hidden">
     <div class="container has-text-centered">
-      <h4 class="title is-4">
-        You have a Flow.
-      </h4>
+      <h5 class="title is-5">
+        Data from your Flow (ID: <span id="flowid-text"></span>)
+        <a class="button is-small is-outlined is-danger is-pulled-right" onclick="removeFlow();">Remove</a>
+      </h5>
+      <canvas id="flow-chart" width="400" height="200"></canvas>
     </div>
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script type="text/javascript" src="/javascript/dashboard.js"></script>
 </body>
 </html>

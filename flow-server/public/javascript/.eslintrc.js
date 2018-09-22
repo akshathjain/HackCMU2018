@@ -5,6 +5,7 @@ module.exports = {
   },
   'globals': {
     'axios': false,
-    'sha512': false
+    'sha512': false,
+    'Chart': false
   }
 }

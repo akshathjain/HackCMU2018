@@ -15,12 +15,7 @@ function validateEmail(email) {
 // Show or hide LogIn/SignUp popups
 // eslint-disable-next-line no-unused-vars
 function showModal(id, displayVal) {
-  if (displayVal) {
-    document.getElementById('showPassword').checked = false;
-    document.querySelector(`#${id}`).style.display = 'inherit';
-  } else {
-    document.querySelector(`#${id}`).style.display = 'none';
-  }
+  document.querySelector(`#${id}`).classList.toggle('is-active');
 }
 
 // Make password visible

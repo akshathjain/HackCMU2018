@@ -1,20 +1,3 @@
-a {
-  color: #00B7FF;
-}
-
-.hero-body div h1, .hero-body div h3 {
-	color: white;
-	font-weight: bold;
-}
-
-.hero-body img {
-	width: 15rem;
-}
-
-.navbar {
-	color: black;
-}
-
 /* Background image for landing screen */
 #water {
 	/* The image used */
@@ -27,4 +10,18 @@ a {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+
+#water .hero-body {
+	color: white;
+	font-weight: bolder;
+}
+
+#water .hero-body img {
+	width: 15rem;
+}
+
+#main-subtitle {
+	color: white;
+	font-weight: bold;
 }

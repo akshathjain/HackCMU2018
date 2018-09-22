@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 <body>
-	<section class="hero is-fullheight has-background-image" id="water">
+	<section class="hero is-dark is-fullheight has-background-image" id="water">
 		<!-- Navbar -->
 		<div class="hero-head">
 			<nav class="navbar" role="navigation" aria-label="main navigation">
@@ -50,104 +50,6 @@
 				<a class="button is-outlined is-white is-rounded is-medium" onclick="showModal('signUp', true)">
 					<strong>Sign up or log in</strong>
 				</a>
-			</div>
-
-			<!-- Log In Popup Form -->
-			<div class="modal" id="logIn">
-				<div class="modal-background"></div>
-				<div class="modal-card">
-					<header class="modal-card-head">
-						<p class="modal-card-title">Log In</p>
-						<button class="delete" aria-label="close" onclick="showModal('logIn', false)"></button>
-					</header>
-					<section class="modal-card-body">
-						<!-- Username -->
-						<div class="field">
-							<div class="control has-icons-left has-icons-right">
-								<input id="logInUsername" name="username" class="input" type="text" placeholder="Username" required>
-								<span class="icon is-small is-left">
-									<i class="fas fa-user"></i>
-								</span>
-							</div>
-						</div>
-						<!-- Password -->
-						<div class="field">
-							<div class="control has-icons-left has-icons-right">
-								<input id="logInPassword" name="password" class="input" type="password" placeholder="Password" required>
-								<span class="icon is-small is-left">
-									<i class="fas fa-unlock"></i>
-								</span>
-							</div>
-						</div>
-					</section>
-					<footer class="modal-card-foot">
-						<button class="button is-success" onclick="logIn();">Log In!</button>
-						Don't have an account? &nbsp;
-						<a onclick="showModal('logIn', false); showModal('signUp', true)">
-							Sign Up
-						</a>
-					</footer>
-				</div>
-			</div>
-
-			<!-- Sign Up Popup Form -->
-			<div class="modal" id="signUp">
-				<div class="modal-background"></div>
-				<div class="modal-card">
-					<header class="modal-card-head">
-						<p class="modal-card-title">Sign Up</p>
-						<button class="delete" aria-label="close" onclick="showModal('signUp', false)"></button>
-					</header>
-					<section class="modal-card-body">
-						<form id="signUpForm" method="POST">
-							<!-- Username -->
-							<div class="field">
-								<div class="control has-icons-left has-icons-right">
-									<input id="signUpUsername" class="input" type="text" placeholder="Username" onkeyup="checkUName(this.value)" required>
-									<span class="icon is-small is-left">
-										<i class="fas fa-user"></i>
-									</span>
-								</div>
-								<p class="help is-danger is-hidden" id="usernameTaken">This username is taken.</p>
-							</div>
-							<!-- Email -->
-							<div class="field">
-								<div class="control has-icons-left has-icons-right">
-									<input id="signUpEmail" class="input" type="email" placeholder="Email" required>
-									<span class="icon is-small is-left">
-										<i class="fas fa-envelope"></i>
-									</span>
-								</div>
-							</div>
-							<!-- Password -->
-							<div class="field">
-								<div class="control has-icons-left has-icons-right">
-									<input id="signUpPassword" class="input" type="password" placeholder="Password" required>
-									<span class="icon is-small is-left">
-										<i class="fas fa-unlock"></i>
-									</span>
-									<span class="icon is-small is-right">
-										<i id="PWVisible" class="fas fa-eye-slash"></i>
-									</span>
-								</div>
-							</div>
-							<div class="field" onchange="togglePWVisibility()">
-								<label class="checkbox">
-									<input id="showPassword" type="checkbox" value="0">
-									Show password
-								</label>
-							</div>
-							<p id="signUpError" class="help is-danger is-hidden"></p>
-						</form>
-					</section>
-					<footer class="modal-card-foot">
-						<button class="button is-success" onclick="signUp()">Sign Up!</button>
-						Already have an account? &nbsp;
-						<a onclick="showModal('signUp', false); showModal('logIn', true)">
-							Log In
-						</a>
-					</footer>
-				</div>
 			</div>
 		</div>
 		<div class="hero-foot">
@@ -215,6 +117,104 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Log In Popup Form -->
+	<div class="modal" id="logIn">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title">Log In</p>
+				<button class="delete" aria-label="close" onclick="showModal('logIn', false)"></button>
+			</header>
+			<section class="modal-card-body">
+				<!-- Username -->
+				<div class="field">
+					<div class="control has-icons-left has-icons-right">
+						<input id="logInUsername" name="username" class="input" type="text" placeholder="Username" required>
+						<span class="icon is-small is-left">
+							<i class="fas fa-user"></i>
+						</span>
+					</div>
+				</div>
+				<!-- Password -->
+				<div class="field">
+					<div class="control has-icons-left has-icons-right">
+						<input id="logInPassword" name="password" class="input" type="password" placeholder="Password" required>
+						<span class="icon is-small is-left">
+							<i class="fas fa-unlock"></i>
+						</span>
+					</div>
+				</div>
+			</section>
+			<footer class="modal-card-foot">
+				<button class="button is-success" onclick="logIn();">Log In!</button>
+				Don't have an account? &nbsp;
+				<a onclick="showModal('logIn', false); showModal('signUp', true)">
+					Sign Up
+				</a>
+			</footer>
+		</div>
+	</div>
+
+	<!-- Sign Up Popup Form -->
+	<div class="modal" id="signUp">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title">Sign Up</p>
+				<button class="delete" aria-label="close" onclick="showModal('signUp', false)"></button>
+			</header>
+			<section class="modal-card-body">
+				<form id="signUpForm" method="POST">
+					<!-- Username -->
+					<div class="field">
+						<div class="control has-icons-left has-icons-right">
+							<input id="signUpUsername" class="input" type="text" placeholder="Username" onkeyup="checkUName(this.value)" required>
+							<span class="icon is-small is-left">
+								<i class="fas fa-user"></i>
+							</span>
+						</div>
+						<p class="help is-danger is-hidden" id="usernameTaken">This username is taken.</p>
+					</div>
+					<!-- Email -->
+					<div class="field">
+						<div class="control has-icons-left has-icons-right">
+							<input id="signUpEmail" class="input" type="email" placeholder="Email" required>
+							<span class="icon is-small is-left">
+								<i class="fas fa-envelope"></i>
+							</span>
+						</div>
+					</div>
+					<!-- Password -->
+					<div class="field">
+						<div class="control has-icons-left has-icons-right">
+							<input id="signUpPassword" class="input" type="password" placeholder="Password" required>
+							<span class="icon is-small is-left">
+								<i class="fas fa-unlock"></i>
+							</span>
+							<span class="icon is-small is-right">
+								<i id="PWVisible" class="fas fa-eye-slash"></i>
+							</span>
+						</div>
+					</div>
+					<div class="field" onchange="togglePWVisibility()">
+						<label class="checkbox">
+							<input id="showPassword" type="checkbox" value="0">
+							Show password
+						</label>
+					</div>
+					<p id="signUpError" class="help is-danger is-hidden"></p>
+				</form>
+			</section>
+			<footer class="modal-card-foot">
+				<button class="button is-success" onclick="signUp()">Sign Up!</button>
+				Already have an account? &nbsp;
+				<a onclick="showModal('signUp', false); showModal('logIn', true)">
+					Log In
+				</a>
+			</footer>
+		</div>
+	</div>
 
 	<!-- jQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>

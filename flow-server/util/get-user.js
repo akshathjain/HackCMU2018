@@ -8,8 +8,12 @@ function getUser(db, username, callback, passError, checkPassword, password) {
 
     const user = reply;
     // check password if necessary
+
+      console.log(password, user.password);
     if (checkPassword) {
+      console.log(password, user.password);
       if (bcrypt.compareSync(password, user.password)) {
+        console.log(password, user.password);
         // remove password
         delete user.password;
         callback(null, user);

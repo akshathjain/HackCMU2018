@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const checkAuth = require('../util/check-auth');
 const smartAI = require('../util/smart-ai');
+const sendEmail = require('../util/mailer');
 
 const router = express.Router();
 
@@ -182,8 +183,8 @@ router.get('/myflow', checkAuth, (req, res, next) => {
     if (err) return next(createError(500, err));
     const data = smartAI.toPlotPoints(reply);
     res.json({
-      collected_data: data,
-      smart_ai: smartAI.predict(data, futureTime),
+      collected_data: data.length > 0 ? data : [],
+      smart_ai: data.length > 0 ? smartAI.predict(data, futureTime) : [],
     });
   });
 });

@@ -16,10 +16,10 @@
 <body>
 	<section class="hero is-fullheight has-background-image" id="water">
 		<div class="hero-head">
-			<nav class="navbar" role="navigation" aria-label="main navigation">
+			<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
 				<div class="navbar-brand">
 					<a class="navbar-item" href="#">
-						<img src="../images/logo.jpg" alt="Logo" title="Flow: Revolutionizing water consumption" width="70" height="28">
+						<img src="../images/logo.png" alt="Logo" title="Flow: Revolutionizing water consumption" width="70" height="28">
 					</a>
 				</div>
 				<div class="navbar-menu">
@@ -58,7 +58,7 @@
 							<div class="field">
 								<!-- <label class="label">Username</label> -->
 								<div class="control has-icons-left has-icons-right">
-									<input class="input" type="text" placeholder="Username" required>
+									<input id="logInUserName" class="input" type="text" placeholder="Username" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-user"></i>
 									</span>
@@ -66,11 +66,11 @@
 										<!--<i class="fas fa-exclamation-triangle"></i>-->
 									</span>
 								</div>
-								<!--<p class="help is-danger">This username is taken.</p>-->
+								<p class="help is-danger is-hidden">This username is taken.</p>
 							</div>
 							<div class="field">
 								<div class="control has-icons-left has-icons-right">
-									<input class="input" type="password" placeholder="Password" required>
+									<input id="logInPassword" class="input" type="password" placeholder="Password" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-unlock"></i>
 									</span>
@@ -100,22 +100,17 @@
 					<section class="modal-card-body">
 						<form id="signUpForm" method="POST">
 							<div class="field">
-								<!-- <label class="label">Username</label> -->
 								<div class="control has-icons-left has-icons-right">
-									<input class="input" type="text" placeholder="Username" required>
+									<input id="signUpUsername" class="input" type="text" placeholder="Username" onkeyup="checkUName(this.value)" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-user"></i>
 									</span>
-									<span class="icon is-small is-right">
-										<!--<i class="fas fa-exclamation-triangle"></i>-->
-									</span>
 								</div>
-								<!--<p class="help is-danger">This username is taken.</p>-->
+								<p class="help is-danger is-hidden">This username is taken.</p>
 							</div>
 							<div class="field">
-								<!-- <label class="label">Email</label> -->
 								<div class="control has-icons-left has-icons-right">
-									<input class="input" type="email" placeholder="Email" required>
+									<input id="signUpEmail" class="input" type="email" placeholder="Email" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-envelope"></i>
 									</span>
@@ -123,17 +118,24 @@
 							</div>
 							<div class="field">
 								<div class="control has-icons-left has-icons-right">
-									<input id="passwordVal0" class="input" type="password" placeholder="Password" onkeyup="checkPassword()" required>
+									<input id="signUpPassword" class="input" type="password" placeholder="Password" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-unlock"></i>
 									</span>
 									<span class="icon is-small is-right">
+										<i id="PWVisible" class="fas fa-eye"></i>
 									</span>
 								</div>
 							</div>
-							<div class="field">
+							<div class="field" onchange="togglePWVisibility()">
+								<label class="checkbox">
+									<input type="checkbox" value="0">
+									Show password
+								</label>
+							</div>
+							<!-- <div class="field">
 								<div class="control has-icons-left has-icons-right">
-									<input id="passwordVal1" class="input" type="password" placeholder="Confirm Password" onkeyup="checkPassword()" required>
+									<input id="signUpPassword1" class="input" type="password" placeholder="Confirm Password" onkeyup="checkPassword()" required>
 									<span class="icon is-small is-left">
 										<i class="fas fa-unlock"></i>
 									</span>
@@ -142,11 +144,11 @@
 									</span>
 									<p class="help is-danger passwordMatch is-hidden">Passwords do not match.</p>
 								</div>
-							</div>
+							</div> -->
 						</form>
 					</section>
 					<footer class="modal-card-foot">
-						<button class="button is-success">Sign Up!</button>
+						<button class="button is-success" onclick="signUp()">Sign Up!</button>
 						Already have an account? &nbsp;
 						<a onclick="showModal('signUp', false); showModal('logIn', true)">
 							Log In
@@ -162,7 +164,7 @@
 	<section id="about" class="section">
 		<div class="container has-text-centered">
 			<h3 class="title">
-				Why use FLOW?
+				Why use flow?
 			</h3>
 			<div class="columns">
 				<div class="column">
@@ -194,6 +196,7 @@
 	</section>
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../javascript/sha512.js"></script>
 	<script type="text/javascript" src="../javascript/main.js"></script>
 </body>
 </html>

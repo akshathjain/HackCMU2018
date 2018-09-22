@@ -67,6 +67,9 @@ function logIn() {
     },
     function(data, status) {
       alert("Data: " + data + "\nStatus: " + status);
+      if (status == 'success') {
+        window.location.href = '/login/dashboard/';
+      }
     }
   );
 }

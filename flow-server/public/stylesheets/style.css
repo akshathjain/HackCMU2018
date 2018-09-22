@@ -6,9 +6,13 @@ a {
   color: #00B7FF;
 }
 
-.hero-body div h1, .hero-body div h2 {
+.hero-body div h1, .hero-body div h3 {
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
+}
+
+.hero-body img {
+	width: 15rem;
 }
 
 .navbar {

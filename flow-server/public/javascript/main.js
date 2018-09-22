@@ -42,12 +42,15 @@ function togglePWVisibility() {
 
 function checkUName(username) {
   if (username !== "") {
+    $('#usernameTaken').removeClass('is-hidden');
     $.get("/login/usercheck/",
       {
         "username": username
       },
-      function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
+      function(data, status, xhr){
+        if (xhr.status === 200) {
+          $('#usernameTaken').addClass('is-hidden');
+        }
       }
     );
   }

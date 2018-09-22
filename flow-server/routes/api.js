@@ -103,14 +103,24 @@ router.post('/deregister', checkAuth, (req, res, next) => {
 });
 
 /*
+  GET current user data
+*/
+router.get('/my', checkAuth, (req, res) => {
+  res.json(req.user);
+});
+
+/*
   GET data points for a Flow
   must be logged in to access
 */
 router.get('/myflow', checkAuth, (req, res, next) => {
-  const { id } = req.query;
+  const id = req.user.flow;
+
+  // make sure we have a valid param
+  if (!id) return next(createError(400, 'Provide a Flow ID'));
 
   // get values with timestamps
-  req.db.zrange([`flow:${id}`, 'withscores'], (err, reply) => {
+  req.db.zrange([`flow:${id}`, 0, -1, 'withscores'], (err, reply) => {
     if (err) return next(createError(500, err));
     res.json(reply);
   });

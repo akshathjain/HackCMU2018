@@ -25,6 +25,7 @@ function showModal(id, displayVal) {
 
 // Make password visible
 let passwordVisible = false;
+document.querySelector('#showPassword').checked = false;
 // eslint-disable-next-line no-unused-vars
 function togglePWVisibility() {
   if (passwordVisible) {

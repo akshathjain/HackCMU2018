@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+const outbox = [];
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -14,20 +15,29 @@ function genContent(props, type) {
       subject: `Welcome to Flow, ${props.username}!`,
       text: 'Now you\'ll get up-to-the-minute water consumptions online.',
     },
+    limit: {
+      subject: 'You\'re using too much water',
+      text: `Flow ${props.id} reports that consumption is over your limit.`,
+    },
   };
   return templates[type];
 }
 
 function send(recipient, props, type) {
+  if (outbox.contains(recipient)) return;
   transporter.sendMail({
     from: 'flowfluidproject@gmail.com',
     to: recipient,
     ...genContent(props, type),
-  }, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Email sent: ' + info.response);
+  }, (err) => {
+    if (!err) {
+      outbox.push(recipient);
+      setTimeout(() => {
+        const index = outbox.indexOf(recipient);
+        if (index >= 0) {
+          outbox.splice(index, 1);
+        }
+      }, 3600000);
     }
   });
 }

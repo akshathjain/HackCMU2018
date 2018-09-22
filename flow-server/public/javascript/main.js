@@ -58,7 +58,8 @@ function logIn(...args) {
   }).then(() => {
     window.location.href = '/login/dashboard';
   }).catch(() => {
-    // TODO: turn something red
+    document.querySelector('#logInPassword').classList.add('is-danger');
+    document.querySelector('#badPassword').classList.remove('is-hidden');
   });
 }
 
@@ -98,4 +99,21 @@ function signUp() {
   });
 
   return true;
+}
+
+function betterPassword() {
+  document.querySelector('#logInPassword').classList.remove('is-danger');
+  document.querySelector('#badPassword').classList.add('is-hidden');
+}
+
+function logInEnter(e) {
+  if (e.keyCode == 13) {
+    logIn();
+  }
+}
+
+function signUpEnter(e) {
+  if (e.keyCode == 13) {
+    signUp();
+  }
 }

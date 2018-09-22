@@ -152,7 +152,7 @@
 				<!-- Username -->
 				<div class="field">
 					<div class="control has-icons-left has-icons-right">
-						<input id="logInUsername" name="username" class="input" type="text" placeholder="Username" required>
+						<input id="logInUsername" name="username" class="input" type="text" placeholder="Username" onkeyup="logInEnter(event)" required>
 						<span class="icon is-small is-left">
 							<i class="fas fa-user"></i>
 						</span>
@@ -161,12 +161,13 @@
 				<!-- Password -->
 				<div class="field">
 					<div class="control has-icons-left has-icons-right">
-						<input id="logInPassword" name="password" class="input" type="password" placeholder="Password" required>
+						<input id="logInPassword" name="password" class="input" type="password" placeholder="Password" onkeyup="betterPassword(); logInEnter(event)" required>
 						<span class="icon is-small is-left">
 							<i class="fas fa-unlock"></i>
 						</span>
 					</div>
 				</div>
+				<p id="badPassword" class="help is-danger is-hidden">Wrong username or password!</p>
 			</section>
 			<footer class="modal-card-foot">
 				<button class="button is-success" onclick="logIn();">Log In!</button>
@@ -191,7 +192,7 @@
 					<!-- Username -->
 					<div class="field">
 						<div class="control has-icons-left has-icons-right">
-							<input id="signUpUsername" class="input" type="text" placeholder="Username" onkeyup="checkUName(this.value)" required>
+							<input id="signUpUsername" class="input" type="text" placeholder="Username" onkeyup="checkUName(this.value); signUpEnter(event)" required>
 							<span class="icon is-small is-left">
 								<i class="fas fa-user"></i>
 							</span>
@@ -201,7 +202,7 @@
 					<!-- Email -->
 					<div class="field">
 						<div class="control has-icons-left has-icons-right">
-							<input id="signUpEmail" class="input" type="email" placeholder="Email" required>
+							<input id="signUpEmail" class="input" type="email" placeholder="Email" onkeyup="signUpEnter(event)" required>
 							<span class="icon is-small is-left">
 								<i class="fas fa-envelope"></i>
 							</span>
@@ -210,7 +211,7 @@
 					<!-- Password -->
 					<div class="field">
 						<div class="control has-icons-left has-icons-right">
-							<input id="signUpPassword" class="input" type="password" placeholder="Password" required>
+							<input id="signUpPassword" class="input" type="password" placeholder="Password" onkeyup="signUpEnter(event)" required>
 							<span class="icon is-small is-left">
 								<i class="fas fa-unlock"></i>
 							</span>

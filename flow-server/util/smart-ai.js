@@ -14,7 +14,7 @@ function format(data) {
 function predict(data, time) {
   const newData = format(data);
   const n = newData[0].length;
-  const regression;
+  let regression;
   try {
     regression = new PolynomialRegression(newData[0], newData[1], n);
   } catch (e) {

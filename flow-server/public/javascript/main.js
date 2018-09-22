@@ -43,13 +43,13 @@ function signUp() {
   var username = $('#signUpUsername').val();
   var email = $('#signUpEmail').val();
   var password = sha512($('#signUpPassword').val());
-  
-  $.post("/login/signup/", 
+
+  $.post("/login/signup/",
     {
-      "username": username, 
-      "email": email, 
+      "username": username,
+      "email": email,
       "password": password
-    }, 
+    },
     function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
     }
@@ -60,12 +60,12 @@ function logIn() {
   var username = $('#logInUsername').val();
   var password = sha512($('#logInPassword').val());
 
-  $.post("/login/signup", 
+  $.post("/login/",
     {
-      "username": username, 
+      "username": username,
       "password": password
-    }, 
-    function(data, status){
+    },
+    function(data, status) {
       alert("Data: " + data + "\nStatus: " + status);
     }
   );

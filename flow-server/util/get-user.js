@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt');
-
 function getUser(db, username, callback, passError, checkPassword, password) {
   db.hgetall(`user:${username}`, (err, reply) => {
     // make sure the user exists
@@ -9,16 +7,13 @@ function getUser(db, username, callback, passError, checkPassword, password) {
     const user = reply;
     // check password if necessary
     if (checkPassword) {
-      bcrypt.compare(password, user.password, (compareErr, success) => {
-        if (compareErr) return callback(err);
-        if (!success) {
-          return callback(passError ? 'Wrong password' : null, false);
-        }
-
+      if (password === user.password) {
         // remove password
         delete user.password;
         callback(null, user);
-      });
+      } else {
+        callback(passError ? 'Wrong password' : null, false);
+      }
     } else {
       // remove password
       delete user.password;

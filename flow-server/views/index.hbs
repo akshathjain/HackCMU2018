@@ -54,35 +54,32 @@
 						<button class="delete" aria-label="close" onclick="showModal('logIn', false)"></button>
 					</header>
 					<section class="modal-card-body">
-						<form id="logInForm" method="POST">
-							<div class="field">
-								<!-- <label class="label">Username</label> -->
-								<div class="control has-icons-left has-icons-right">
-									<input id="logInUsername" class="input" type="text" placeholder="Username" required>
-									<span class="icon is-small is-left">
-										<i class="fas fa-user"></i>
-									</span>
-									<span class="icon is-small is-right">
-										<!--<i class="fas fa-exclamation-triangle"></i>-->
-									</span>
-								</div>
-								<p class="help is-danger is-hidden">This username is taken.</p>
+						<div class="field">
+							<!-- <label class="label">Username</label> -->
+							<div class="control has-icons-left has-icons-right">
+								<input id="logInUsername" name="username" class="input" type="text" placeholder="Username" required>
+								<span class="icon is-small is-left">
+									<i class="fas fa-user"></i>
+								</span>
+								<span class="icon is-small is-right">
+									<!--<i class="fas fa-exclamation-triangle"></i>-->
+								</span>
 							</div>
-							<div class="field">
-								<div class="control has-icons-left has-icons-right">
-									<input id="logInPassword" class="input" type="password" placeholder="Password" required>
-									<span class="icon is-small is-left">
-										<i class="fas fa-unlock"></i>
-									</span>
-									<span class="icon is-small is-right">
-										<!--<i class="fas fa-exclamation-triangle"></i>-->
-									</span>
-								</div>
+						</div>
+						<div class="field">
+							<div class="control has-icons-left has-icons-right">
+								<input id="logInPassword" name="password" class="input" type="password" placeholder="Password" required>
+								<span class="icon is-small is-left">
+									<i class="fas fa-unlock"></i>
+								</span>
+								<span class="icon is-small is-right">
+									<!--<i class="fas fa-exclamation-triangle"></i>-->
+								</span>
 							</div>
-						</form>
+						</div>
 					</section>
 					<footer class="modal-card-foot">
-						<button class="button is-success">Log In!</button>
+						<button class="button is-success" onclick="logIn();">Log In!</button>
 						Don't have an account? &nbsp;
 						<a onclick="showModal('logIn', false); showModal('signUp', true)">
 							Sign Up

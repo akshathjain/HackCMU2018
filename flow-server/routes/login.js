@@ -10,10 +10,9 @@ const router = express.Router();
     username (user:id in db)
     password (salted hash)
 */
-router.post('/', passport.authenticate('local', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/',
-}));
+router.post('/', passport.authenticate('local'), (req, res) => {
+  res.redirect('/login/dashboard');
+});
 
 /*
   GET dashboard page

@@ -11,7 +11,7 @@ const router = express.Router();
     password (salted hash)
 */
 router.post('/', passport.authenticate('local'), (req, res) => {
-  res.redirect('/login/dashboard');
+  res.sendStatus(200);
 });
 
 /*
